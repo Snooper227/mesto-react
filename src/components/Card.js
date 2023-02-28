@@ -13,7 +13,7 @@ function Card({card, onCardClick}) {
         <h2 className="element__title">{card.name}</h2>
         <div className="element__like-box">
           <button className="element__like" type="button"></button>
-          <p className="element__like-counter">{card.likes.lenght}</p>
+          <p className="element__like-counter">{card.likes.length}</p>
         </div>
       </div>
     </div>
