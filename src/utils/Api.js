@@ -27,13 +27,13 @@ export default class Api {
         return Promise.all([this.getInitialCards(), this.getUserInfo()])
     }
 
-    addCard({title, link}) {
+    addCard({name, link}) {
         return fetch(`${this._baseUrl}/cards`, {
             method: 'POST',
             headers: this._headers,
             body: JSON.stringify({
-                name: title,
-                link: link
+                name,
+                link
             })
         })
         .then(this._checkRes);
@@ -69,23 +69,30 @@ export default class Api {
         })
             .then(this._checkRes);
     }
-
     addLike(_id) {
-        return fetch(`${this._baseUrl}/cards/${_id}/likes`, {
-            method: 'PUT',
-            headers: this._headers
-        })
-        .then(this._checkRes);
-    }
+      return fetch(`${this._baseUrl}/cards/${_id}/likes`, {
+          method: 'PUT',
+          headers: this._headers
+      })
+      .then(this._checkRes);
+  }
 
-    deleteLike(_id) {
-        return fetch(`${this._baseUrl}/cards/${_id}/likes`, {
-            method: 'DELETE',
-            headers: this._headers
-        })
-        .then(this._checkRes);
-    }
+  deleteLike(_id) {
+      return fetch(`${this._baseUrl}/cards/${_id}/likes`, {
+          method: 'DELETE',
+          headers: this._headers
+      })
+      .then(this._checkRes);
+  }
+  changeLikeCardStatus(_id, isLiked) {
+      if (isLiked) {
+        return this.addLike(_id);
+      } else{
+        return this.deleteLike(_id);
+      }
+  }
 }
+
 export const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-57',
     headers: {
